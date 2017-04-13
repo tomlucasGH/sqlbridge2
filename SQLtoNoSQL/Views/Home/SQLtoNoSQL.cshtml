@@ -1,0 +1,55 @@
+﻿@using SQLtoNoSQL.Models
+@model SQLtoNoSQLViewModel
+@{
+    ViewBag.Title = "SQLtoNoSQL";
+    //Layout = null;
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+<text>Enter Query Here:</text>
+<br />
+
+@using (Html.BeginForm("SQLtoNoSQL", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    //@Html.Hidden("rememberMe", @Model.RememberMe)
+    //@Html.TextAreaFor(model => model.Property.Help, new { style = "width: 100%;height: 50px;max-width:1000px;", @class = "k-input k-textbox", @tabindex = 16 })
+
+    @Html.TextAreaFor(m => m.SqlQuery, new { style = "width:50%; height:300px; max-width:600px", @resize = "none", @title = "Some Title" })
+    @Html.TextAreaFor(m => m.QueryResult, new { style = "width:50%; height:300px; max-width:600px", @resize = "none", @disabled = "disabled"})//, @disabled = "disabled" }) // @readonly = false, @disabled = "disabled"
+
+    //<textarea id="queryInput" style="width:300px; height:300px;">@Model.Query</textarea>
+    //<textarea id="queryOutput" style="width:300px; height:300px;" disabled>@Model.QueryResult</textarea>
+    <br />
+    <input type="submit" value="Run Query!" />
+    <br />
+    <text>Check this box to enable paging:</text>
+    // Below checkbox is to enable or diable paging.
+    // If enabled we will return chunks of data at a time
+    // If disabled we will return the FULL data from the query
+    @Html.CheckBox("paging")
+    //<input id="pagingID" name="paging" value="true" type="checkbox" />
+
+    // Link this to the user
+    if (ViewBag.LoadMoreResults != null && ViewBag.LoadMoreResults)
+    {
+        <br />
+        <input type="submit" value="Load more results?" />
+    }
+    @*<ul>
+        <li>@Model.QueryResult</li>
+    </ul>*@
+
+    @*<h4>Send verification code</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-8">
+            Select Two-Factor Authentication Provider:
+            @Html.DropDownListFor(model => model.SelectedProvider, Model.Providers)
+            <input type="submit" value="Submit" class="btn btn-default" />
+        </div>
+    </div>*@
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
